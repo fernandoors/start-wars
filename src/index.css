@@ -6,9 +6,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FBF4F4;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.navbar {
+  height: 42px;
+  background: #EF161E;
+}
+#root {
+  background-color: #FCFCFC;
 }
