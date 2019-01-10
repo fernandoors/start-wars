@@ -1,23 +1,23 @@
 import React from 'react'
-import '../style/header.css'
+import { Link } from 'react-router-dom'
+import logoStartWars from '../assets/image/logo-starwars.jpg'
 
-function Header() {
-    return (
-      <nav className='navbar navbar-expand-lg navbar-light'>
-        <a href='/#' className='navbar-brand'><img src={'./assets/images/logo-marvel.png'} alt='LogoMarvel' className='logoMarvel'/></a>
-        <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#header' > 
-          <span className='navbar-toggler-icon'></span>
-          <div className='collapse navbar-collapse' id='header'>
-            <ul className='navbar-nav mr-auto'>
-              <li>Char</li>
-              <li>Com</li>
-              <li>Cre</li>
-              <li>Sto</li>
-            </ul>          
-          </div>
-        </button> 
-      </nav>
-    )
+export default () => {
+  return (
+    <nav className='navbar navbar-expand-sm navbar-dark bg-black'>
+      <Link to='/' className='navbar-brand'><img src={logoStartWars} alt='logoStarWars' className='logoStarWars' /></Link>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+      <div className='collapse navbar-collapse navMenu' id='headerMenu'>
+        <ul className='navbar-nav ml-auto'>
+          <li className='nav-item'> <Link to='/people' className='nav-link'>People</Link> </li>
+          <li className='nav-item'> <Link to='/films' className='nav-link'>Films</Link> </li>
+          <li className='nav-item'> <Link to='/vehicles' className='nav-link'>Vehicles</Link> </li>
+          <li className='nav-item'> <Link to='/planets' className='nav-link'>Planets</Link> </li>
+        </ul>
+      </div>
+    </nav>
+  )
 }
-
-export default Header

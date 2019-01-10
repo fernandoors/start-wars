@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #FBF4F4;
+  background-color: #FCFCFC;
 }
 
 code {
@@ -15,8 +15,8 @@ code {
 }
 
 .navbar {
-  height: 42px;
-  background: #EF161E;
+  height: 55px;
+  background: black;
 }
 #root {
   background-color: #FCFCFC;
