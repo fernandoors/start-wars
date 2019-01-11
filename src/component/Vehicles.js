@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const URL = 'https://swapi.co/api/'
 
-class EndPoint extends Component {
+class Vehicles extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -44,4 +44,4 @@ class EndPoint extends Component {
   }
 }
 
-export default EndPoint
+export default Vehicles

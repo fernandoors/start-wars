@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './include/bootstrap'
 import {BrowserRouter} from 'react-router-dom'
+import 'font-awesome/css/font-awesome.min.css'
+import './include/bootstrap'
 
 import './index.css';
 import './style/header.css'
