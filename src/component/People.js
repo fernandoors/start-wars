@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Body from './Body'
 
-const URL = 'https://swapi.co/api/'
+import {URL} from '../route/Api'
 
 class People extends Component {
   constructor(props) {
@@ -12,16 +12,15 @@ class People extends Component {
       value: '',
       data: [],
     }
-
+    
     this.handleDesc = this.handleDesc.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    this.setState({
-      pathDir: this.props.match.path.replace('/', '')
-    })
-
+    axios.get(`${URL}${this.state.pathDir}/`)
+      .then(resp => this.setState({...this.state.data, data: resp.data.results[0]}))
+      
   }
 
   handleChange(e) {
@@ -31,8 +30,9 @@ class People extends Component {
   }
 
   handleDesc() {
-    this.setState({...this.state.data, data: axios.get(`${URL}${this.state.pathDir}/?search=${this.state.value}`).then(resp => console.log(resp.data.results[0]))})
-    console.log(this.state.data)
+    axios.get(`${URL}${this.state.pathDir}/?search=${this.state.value}`)
+      .then(resp => this.setState({...this.state.data, data: resp.data.results[0]}))
+    
     this.refresh()
   }
 
@@ -41,7 +41,6 @@ class People extends Component {
       value: ''
     })
   }
-
 
   render() {
     return (
@@ -56,7 +55,7 @@ class People extends Component {
             </div>
           </div>
         </div>
-       <Body data={this.state.data}/>
+        <Body data={this.state.data} pathDir={this.state.pathDir} />
       </div>
     )
   }

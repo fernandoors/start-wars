@@ -1,39 +1,33 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
-// const renderCols = () => {
-//   const data = props.data || []
-//   return data.map(resp =>(
-//     <tr key={resp._id}>
-//     <th>{Object.keys(resp)}</th>
-//     </tr>
-//   ))
-// }
 export default props => {
-  const renderRows = () => {
-    const data = props.data || []
-    return data.map(resp =>(
-      <tr key={resp._id}>
-      <td>{resp}</td>
-      </tr>
-    ))
+
+  const renderTable = () => {
+    // const datas = Object.values(props.data) || []
+    return Object.keys(!props.data ? [] : props.data).map((resp, i) => 
+      <table className='table ' key={i}>
+        <thead >
+          <tr>
+            <th>{resp.toUpperCase().replace(/_/g, ' ')}</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr>
+            <td>{props.data[resp]}</td>
+          </tr>
+        </tbody>
+      </table>
+    )
   }
+
   return(
     <div className='col-md-12 col-sm-12' >
-    <header className='page-header'>
-      <h2>{props.pathDir}</h2>
-    </header>
-    <table className='table'>
-      <thead>
-        <tr>
-        <tr >
-        <th>desc</th>
-        </tr>
-        </tr>
-      </thead>
-      <tbody>
-        {renderRows()}
-      </tbody>
-    </table>
-  </div>
+      <Link to='/'>Home</Link>
+      <header className='page-header'>
+        <h2>{props.pathDir.toUpperCase()} - Desc</h2>
+      </header>
+      {renderTable()}
+    </div>
   )
 }
