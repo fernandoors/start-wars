@@ -1,14 +1,11 @@
 ## Project
 
-Develop a Web Site using Marvel API and a modern framework.
+Develop a Web Site using Star Wars API and a modern framework.
 
 ## Environment
 
 ReactJS
-Redux
 Webpack
-Gulp
-Jest
 
 ## UX Template
 
@@ -16,4 +13,4 @@ http://bit.ly/eel-fdoors
 
 ## Access
 
-marvel.fdoors.com.br (hosting by firebase)
+sw.fdoors.com.br (hosting by firebase)
