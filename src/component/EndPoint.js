@@ -1,59 +1,87 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import General from './General'
+import BodyList from './BodyList'
 
 import {URL} from '../route/Api'
+import BodyDetails from './BodyDetails';
 
 class EndPoint extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pathDir: this.props.match.path.replace(/\//g, ''),
+      pathDir: this.props.history.location.pathname.replace(/\//g, ''),
       value: '',
       data: [],
       list: [],
       pageNext: [],
-      pagePrevious: []
+      pagePrevious: [],
+      showDetails: false,
     }
-    
     this.handleDesc = this.handleDesc.bind(this)
-    this.handleList = this.handleList.bind(this)
+    this.showBody = this.showBody.bind(this)
+    this.handleDetails = this.handleDetails.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.componentDidMount = this.componentDidMount(this)
   }
-
-  componentDidMount() {
-    axios.get(`${URL}${this.state.pathDir}/?page=1`)
+componentDidMount(){
+  this.handlePage(this.state.pathDir)
+}
+  componentWillUpdate(){
+    const pageOring = this.props.match.path.replace(/\//g,'')
+    const pageDest = this.props.history.location.pathname.replace(/\//g,'')
+    if(pageOring !== pageDest){
+      this.handlePage(pageDest)
+    }
+  }
+  handlePage(pageDest){
+      axios.get(`${URL}${pageDest}/?page=1`)
       .then(resp => (
         this.setState({
+          ...this.state.pathDir, pathDir: pageDest,
           ...this.state.list, list: resp.data.results,
+          ...this.state.data, data: resp.data.results[0],
+          ...this.state.showDetails, showDetails: false,
           ...this.state.pageNext, pageNext: resp.data.next,
           ...this.state.pagePrevious, pagePrevious: !resp.data.next ? '' : resp.data.previous
         })))
-  }
-
+    } 
+  
   handleChange(e) {
-    this.setState({
-      ...this.state.value, value: e.target.value
+    return this.setState({
+      ...this.state.value, value: e.target.value,
+      ...this.state.showDetails, showDetails: false
     })
   }
 
-  handleDesc() {
+  handleDesc(e) {
+    if(e) {
     axios.get(`${URL}${this.state.pathDir}/?search=${this.state.value}`)
-      .then(resp => this.setState({...this.state.list, list: resp.data.results}))
-    
+      .then(resp => this.setState({...this.state.list, list: resp.data.results}))}
     this.refresh()
   }
-  handleList(){
-    axios.get(`${URL}${this.state.pathDir}/?page=${this.state.pageNext}&search=${this.state.value}`)
-    .then(resp => this.setState({...this.state.list, data: resp.data.results}))
-  }
+
   refresh() {
     this.setState({
       value: ''
     })
   }
 
+  handleDetails(name){
+    axios.get(`${URL}${this.state.pathDir}/?search=${name}`)
+      .then(resp => 
+        {
+          this.setState({
+            ...this.state.data, data: Object.entries(resp.data.results[0]),
+            ...this.state.showDetails, showDetails: true,
+            ...this.state.value, value: ''
+          })
+        }
+      )
+  }
+  showBody(status){
+    if(status){
+      this.setState({...this.state.showDetails, showDetails: false})
+    }
+  }
   render() {
     return (
       <div>
@@ -67,7 +95,9 @@ class EndPoint extends Component {
             </div>
           </div>
         </div>
-        <General list={this.state.list} pageNext={this.state.pageNext} pagePrevious={this.state.pagePrevious} pathDir={this.state.pathDir}/>
+        {!this.state.showDetails && <BodyList {...this.state}  details={this.handleDetails} />}
+        
+        {this.state.showDetails && <BodyDetails data={this.state.data} show={this.showBody} pathDir={this.state.pathDir}/>}
       </div>
     )
   }

@@ -4,14 +4,13 @@ import {Link} from 'react-router-dom'
 export default props => {
 
   const renderTable = () => {
-    return Object.keys(!props.data ? [] : props.data).map((resp, i) => 
+    return  !props.data ? [] : Object.keys(props.data).map((resp, i) => 
       <table className='table' key={i}>
-          {filterTableContent(resp, 'title')}
-          {filterTableContent(props.data[resp], 'item')}
+        {filterTableContent(props.data[resp][0], 'title')}
+        {filterTableContent(props.data[resp][1], 'item')}
       </table>
     )
   }
-  
   const filterTableContent = (exclude, local) =>{
     // Set standard string to UP Case without underscore
     exclude = exclude.toString().toUpperCase().replace(/_/g, ' ')
@@ -50,12 +49,11 @@ export default props => {
     return exclude
   }
 
-
   return(
-    <div className='col-md-12 col-sm-12' >
-      <Link to={props.pathDir}>Return - {props.pathDir.toUpperCase()}</Link>
+    <div className='col-sm-12' >
+      <button className='btn' onClick={() =>props.show(true)}><Link to={props.pathDir}>Return - {props.pathDir.toUpperCase()}</Link></button>
       <header className='page-header' >
-        <h2>{props.pathDir.toUpperCase()} - Desc </h2>
+        <h2>{props.pathDir.toUpperCase()} - Details - {props.data[0][1]} </h2>
       </header>
       {renderTable()}
     </div>
