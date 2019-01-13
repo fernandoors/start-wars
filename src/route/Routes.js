@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Home from '../component/Home'
+// import EndPoint from '../component/EndPoint'
 import People from '../component/People'
 import Films from '../component/Films'
 import Vehicles from '../component/Vehicles'
@@ -12,7 +13,7 @@ export default props => (
     <div className='row'>
       <div className='col'>
         <Switch>
-          <Route path='/people' component={People} />
+          <Route path='/people/' component={People} />
           <Route path='/films' component={Films} />
           <Route path='/vehicles' component={Vehicles} />
           <Route path='/planets' component={Planets} />

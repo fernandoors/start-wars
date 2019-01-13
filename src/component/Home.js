@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 
-import Desc from './Desc'
+import CardHome from './CardHome'
 
 class Home extends Component {
   render() {
     return (
       <div >
         <div className='row'>
-          <Desc value='people' />
-          <Desc value='films' />
+          <CardHome value='people' />
+          <CardHome value='films' />
         </div>
         <div className='row'>
-          <Desc value='vehicles' />
-          <Desc value='planets' />
+          <CardHome value='vehicles' />
+          <CardHome value='planets' />
         </div>
       </div>
     )

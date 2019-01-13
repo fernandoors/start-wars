@@ -1,44 +1,73 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import axios from 'axios'
+import General from './General'
 
-const URL = 'https://swapi.co/api/'
+import {URL} from '../route/Api'
 
 class EndPoint extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      pathDir: this.props.match.path.replace('/',''), 
+      pathDir: this.props.match.path.replace(/\//g, ''),
+      value: '',
+      data: [],
+      list: [],
+      pageNext: [],
+      pagePrevious: []
     }
+    
+    this.handleDesc = this.handleDesc.bind(this)
+    this.handleList = this.handleList.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.componentDidMount = this.componentDidMount(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    axios.get(`${URL}${this.state.pathDir}/?page=1`)
+      .then(resp => (
+        this.setState({
+          ...this.state.list, list: resp.data.results,
+          ...this.state.pageNext, pageNext: resp.data.next,
+          ...this.state.pagePrevious, pagePrevious: !resp.data.next ? '' : resp.data.previous
+        })))
+  }
+
+  handleChange(e) {
     this.setState({
-      pathDir: this.props.match.path.replace('/','')
+      ...this.state.value, value: e.target.value
     })
-    axios.get(`${URL}${this.state.pathDir}`).then(resp => console.log(resp.data.results[0]))
-    console.log(`${URL}${this.state.pathDir}`)
   }
 
-  render(){
-    return(
+  handleDesc() {
+    axios.get(`${URL}${this.state.pathDir}/?search=${this.state.value}`)
+      .then(resp => this.setState({...this.state.list, list: resp.data.results}))
+    
+    this.refresh()
+  }
+  handleList(){
+    axios.get(`${URL}${this.state.pathDir}/?page=${this.state.pageNext}&search=${this.state.value}`)
+    .then(resp => this.setState({...this.state.list, data: resp.data.results}))
+  }
+  refresh() {
+    this.setState({
+      value: ''
+    })
+  }
+
+  render() {
+    return (
       <div>
-      <div role='form' className='search'>
-        <div className='col-md-10 col-sm-12' >
-          <input id='search' className='form-control' placeholder={`Search ${this.state.pathDir}`}></input>
-        </div>
-      </div>
-      <div className='col-md-12 col-sm-12' >
-      <h2>{this.state.pathDir}</h2>
-        <div className='row'>
-        <div className='col-4'>
-        <Link to={this.state.pathDir}><img className="card-img-top pic" src={`./assets/image/${this.state.pathDir}.jpg`} alt="pic"></img></Link>
-        </div>
-        <div className='col-8'>
-        <a href={this.state.pathDir}><p className="card-text">See the description for each Star Wars {this.state.pathDir}.</p></a>
-        </div>
+        <div role='form' className='search'>
+          <div className='row'>
+            <div className='col-10' >
+              <input id='search' className='form-control' value={this.state.value} onChange={this.handleChange} placeholder={`Search ${this.state.pathDir}`}></input>
+            </div>
+            <div className='col-2'>
+              <button className='btn btn-dark fa fa-search' onClick={this.handleDesc}></button>
+            </div>
           </div>
-      </div>
+        </div>
+        <General list={this.state.list} pageNext={this.state.pageNext} pagePrevious={this.state.pagePrevious} pathDir={this.state.pathDir}/>
       </div>
     )
   }

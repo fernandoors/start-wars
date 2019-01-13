@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Body from './Body'
+import General from './General'
 
 import {URL} from '../route/Api'
 
@@ -8,19 +8,27 @@ class Vehicles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pathDir: this.props.match.path.replace('/', ''),
+      pathDir: this.props.match.path.replace(/\//g, ''),
       value: '',
       data: [],
+      list: [],
+      pageNext: [],
+      pagePrevious: []
     }
     
     this.handleDesc = this.handleDesc.bind(this)
+    this.handleList = this.handleList.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
-    axios.get(`${URL}${this.state.pathDir}/`)
-      .then(resp => this.setState({...this.state.data, data: resp.data.results[0]}))
-      
+    axios.get(`${URL}${this.state.pathDir}/?page=1`)
+      .then(resp => (
+        this.setState({
+          ...this.state.list, list: resp.data.results,
+          ...this.state.pageNext, pageNext: resp.data.next,
+          ...this.state.pagePrevious, pagePrevious: !resp.data.next ? '' : resp.data.previous
+        })))
   }
 
   handleChange(e) {
@@ -31,11 +39,14 @@ class Vehicles extends Component {
 
   handleDesc() {
     axios.get(`${URL}${this.state.pathDir}/?search=${this.state.value}`)
-      .then(resp => this.setState({...this.state.data, data: resp.data.results[0]}))
+      .then(resp => this.setState({...this.state.list, list: resp.data.results}))
     
     this.refresh()
   }
-
+  handleList(){
+    axios.get(`${URL}${this.state.pathDir}/?page=${this.state.pageNext}&search=${this.state.value}`)
+    .then(resp => this.setState({...this.state.list, data: resp.data.results}))
+  }
   refresh() {
     this.setState({
       value: ''
@@ -55,7 +66,7 @@ class Vehicles extends Component {
             </div>
           </div>
         </div>
-        <Body data={this.state.data} pathDir={this.state.pathDir} />
+        <General list={this.state.list} pageNext={this.state.pageNext} pagePrevious={this.state.pagePrevious} pathDir={this.state.pathDir}/>
       </div>
     )
   }

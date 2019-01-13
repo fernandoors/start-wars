@@ -1,5 +1,7 @@
 .pic{
-  height: 230px;
+  height: auto;
+  max-height: 300px;
+  
 }
 
 .search{
@@ -7,5 +9,14 @@
   padding-bottom: 30px
 }
 .table{
-  max-width: 300px;
+  max-width: auto;
+}
+
+.list{
+  margin-bottom: 10px;
+  
+}
+
+.hiddenRow{
+  visibility: collapse;
 }
