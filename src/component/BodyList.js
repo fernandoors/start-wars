@@ -24,7 +24,7 @@ export default props =>{
   
   return (
     <div className='col-sm-12'>
-      <Link to='/'>Home</Link>
+      <Link to='/'>HOME</Link>
       <table className='table'>
       <thead>
         <tr>

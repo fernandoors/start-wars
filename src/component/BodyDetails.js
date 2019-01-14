@@ -49,11 +49,18 @@ export default props => {
     return exclude
   }
 
+  const renderImg = () => {
+    if(props.img) return <img src={props.img} alt='img' className='picDetails'></img> 
+  }
+  
   return(
     <div className='col-sm-12' >
-      <button className='btn' onClick={() =>props.show(true)}><Link to={props.pathDir}>Return - {props.pathDir.toUpperCase()}</Link></button>
+      <button className='btn' onClick={() =>props.show(true)}><Link to={props.pathDir}>RETURN - {props.pathDir.toUpperCase()}</Link></button>
       <header className='page-header' >
-        <h2>{props.pathDir.toUpperCase()} - Details - {props.data[0][1]} </h2>
+        <h2>
+          <p>Details - {props.data[0][1]} </p>
+           {renderImg()} 
+        </h2>
       </header>
       {renderTable()}
     </div>
