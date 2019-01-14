@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Header from './component/Header';
+import {BrowserRouter as Router} from 'react-router-dom'
+
+import { shallow } from 'enzyme'
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const wrapper = shallow(
+    <Router>
+      <App /> 
+    </Router>
+    )
+  expect(wrapper.find(Header).length).toBe(0)
 });
