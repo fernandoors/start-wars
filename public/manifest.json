@@ -5,12 +5,18 @@
   "description": "This challenge tests front end skills - by Fernando Silva (FDOORS)",
   "icons": [
     {
-      "src": "logo-eel-white",
+      "src": "./assets/image/logo-eel-white.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
+    },
+    {
+      "src": "./assets/image/logo-eel-white-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"

@@ -5,7 +5,6 @@ import logoStartWars from '../assets/image/logo-starwars-min.jpg'
 export default props => {
   return (
     <nav className='navbar header navbar-dark bg-black'>
-
       <Link to='/' className='navbar-brand'><img src={logoStartWars} alt='logoStarWars' className='logoStarWars' /></Link>
       <div className='row'>
         <p>{props.match}</p>

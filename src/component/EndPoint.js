@@ -23,7 +23,7 @@ class EndPoint extends Component {
       img: ''
     }
     this.handleDesc = this.handleDesc.bind(this)
-    this.showBody = this.showBody.bind(this)
+    this.showBodyList = this.showBodyList.bind(this)
     this.handleDetails = this.handleDetails.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -79,10 +79,10 @@ componentDidMount(){
             ...this.state.showDetails, showDetails: true,
             ...this.state.img, img: ''
           })
-      ).then(axios.get(`${URLIMG}q=Star Wars ${name}`, {headers: {"Ocp-Apim-Subscription-Key": imgKey}})
+      ).then(axios.get(`${URLIMG}q=Star Wars ${name}&maxFileSize=200000`, {headers: {"Ocp-Apim-Subscription-Key": imgKey}})
        .then(img => this.setState({...this.state.img,  img: img.data.value[0].contentUrl})))
   }
-  showBody(status){
+  showBodyList(status){
     if(status){
       this.setState({...this.state.showDetails, showDetails: false})
     }
@@ -102,7 +102,7 @@ componentDidMount(){
         </div>
         {!this.state.showDetails && <BodyList {...this.state}  details={this.handleDetails} />}
         
-        {this.state.showDetails && <BodyDetails data={this.state.data} img={this.state.img} show={this.showBody} pathDir={this.state.pathDir}/>}
+        {this.state.showDetails && <BodyDetails data={this.state.data} img={this.state.img} show={this.showBodyList} pathDir={this.state.pathDir}/>}
       </div>
     )
   }
