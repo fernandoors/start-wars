@@ -1,10 +1,9 @@
 import React from 'react'
-import logoEel from '../assets/image/logo-eel-white.png'
 
 export default () =>  {
     return(
       <nav className='navbar footer'>
-       <a href='https://www.eel.ventures' className='mx-auto' > <img src={logoEel} alt='LogoEel' className='logoEel '/></a>
+        <a href="https://github.com/fernandoors/eel" ><i className='fa icons fa-git'/></a>
       </nav>
     )
 }
