@@ -1,16 +1,16 @@
 {
   "lang": "en",
-  "short_name": "ELL - FDOORS",
+  "short_name": "SW - FDOORS",
   "name": "Front End challenge",
-  "description": "This challenge tests front end skills - by Fernando Silva (FDOORS)",
+  "description": "This challenge tests front end skills - by Fernando Silva (FDOORS) - 2018",
   "icons": [
     {
-      "src": "./assets/image/logo-eel-white.png",
+      "src": "./assets/image/logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
     },
     {
-      "src": "./assets/image/logo-eel-white-192.png",
+      "src": "./assets/image/logo.png",
       "type": "image/png",
       "sizes": "192x192"
     }
